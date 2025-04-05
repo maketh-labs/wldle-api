@@ -1,54 +1,56 @@
-import { userRepository } from "../repositories";
-import { verifySignature, generateAccessToken, generateRefreshToken, verifyRefreshToken } from "../utils/auth";
+import {MiniAppWalletAuthSuccessPayload, verifySiweMessage} from '@worldcoin/minikit-js';
+import {userRepository} from "../repositories";
+import {generateAccessToken, generateRefreshToken, verifyRefreshToken} from "../utils/auth";
 
 export class AuthService {
-  async authenticate(address: string, signature: string) {
-    // Verify the signature
-    const isValid = await verifySignature(address, signature);
-    if (!isValid) {
+  async authenticate(payload: MiniAppWalletAuthSuccessPayload, nonce: string) {
+    try {
+      const validMessage = await verifySiweMessage(payload, nonce)
+      if (!validMessage.isValid) {
+        throw new Error("Invalid signature");
+      }
+
+      const address = validMessage.siweMessageData.address as `0x${string}`
+
+      if (!address) {
+        throw new Error("signature should be from a valid address");
+      }
+
+      const user = await userRepository.findOrCreate(address);
+
+      const accessToken = generateAccessToken(address);
+      const refreshToken = generateRefreshToken(address);
+
+      await userRepository.updateRefreshToken(address, refreshToken);
+
+      return {accessToken, refreshToken};
+    } catch (error) {
       throw new Error("Invalid signature");
     }
-
-    // Find or create the user
-    const user = await userRepository.findOrCreate(address);
-
-    // Generate tokens
-    const accessToken = generateAccessToken(address);
-    const refreshToken = generateRefreshToken(address);
-
-    // Save refresh token to the database
-    await userRepository.updateRefreshToken(address, refreshToken);
-
-    return { accessToken, refreshToken };
   }
 
   async refreshToken(token: string) {
-    // Verify the refresh token
     const payload = verifyRefreshToken(token);
     if (!payload) {
       throw new Error("Invalid refresh token");
     }
 
-    const { address } = payload;
+    const {address} = payload;
 
-    // Check if the refresh token is valid in the database
     const user = await userRepository.findByAddress(address);
     if (!user || user.refreshToken !== token) {
       throw new Error("Invalid refresh token");
     }
 
-    // Generate new tokens
     const accessToken = generateAccessToken(address);
     const refreshToken = generateRefreshToken(address);
 
-    // Save new refresh token to the database
     await userRepository.updateRefreshToken(address, refreshToken);
 
-    return { accessToken, refreshToken };
+    return {accessToken, refreshToken};
   }
 
   async logout(address: string) {
-    // Remove refresh token from the database
     await userRepository.updateRefreshToken(address, null);
   }
 } 

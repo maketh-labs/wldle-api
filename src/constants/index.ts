@@ -1,4 +1,4 @@
-import { worldchain, worldchainSepolia } from "viem/chains";
+import {Chain, worldchain, worldchainSepolia} from "viem/chains";
 import dotenv from 'dotenv';
 
 dotenv.config();
@@ -28,7 +28,7 @@ requiredEnvVars.forEach((envVar) => {
 export const NODE_ENV = process.env.NODE_ENV || 'development';
 
 export const ENV: 'main' | 'dev' = NODE_ENV === 'production' ? 'main' : 'dev';
-export const CHAIN = ENV === 'main' ? worldchain : worldchainSepolia;
+export const CHAIN: Chain = (ENV === 'main' ? worldchain : worldchainSepolia) as Chain;
 
 export const PORT = process.env.PORT || 3000;
 export const JWT_SECRET = process.env.JWT_SECRET || 'jwt_secret';
@@ -53,5 +53,5 @@ export const RPC_URLS = {
 
 export const JWT_ACCESS_TOKEN_EXPIRY = '1h';
 export const JWT_REFRESH_TOKEN_EXPIRY = '14d';
-export const SIGN_MESSAGE = 'Sign in to wldle';
+export const SIGN_MESSAGE = 'Sign in to wldle'; // not used for now
 export const MAX_TRIES = 6;

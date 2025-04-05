@@ -1,6 +1,6 @@
-import { DataSource } from "typeorm";
-import { User, Game, GameGuess } from "../models";
-import { DB_DATABASE, DB_HOST, DB_PASSWORD, DB_PORT, DB_USERNAME, NODE_ENV } from "src/constants";
+import {DataSource} from "typeorm";
+import {Game, GameGuess, User} from "../models";
+import {DB_DATABASE, DB_HOST, DB_PASSWORD, DB_PORT, DB_USERNAME, NODE_ENV} from "src/constants";
 
 export const AppDataSource = new DataSource({
   type: "mysql",
@@ -22,4 +22,4 @@ export const initializeDatabase = async () => {
     console.error("Error initializing database connection:", error);
     throw error;
   }
-}; 
+};

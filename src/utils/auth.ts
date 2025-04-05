@@ -1,9 +1,6 @@
 import jwt from 'jsonwebtoken';
-import { verifyMessage } from 'viem';
-import { SIGN_MESSAGE, JWT_ACCESS_TOKEN_EXPIRY, JWT_REFRESH_TOKEN_EXPIRY, JWT_SECRET } from '../constants';
-import dotenv from 'dotenv';
-
-dotenv.config();
+import {verifyMessage} from 'viem';
+import {JWT_ACCESS_TOKEN_EXPIRY, JWT_REFRESH_TOKEN_EXPIRY, JWT_SECRET, SIGN_MESSAGE} from '../constants';
 
 export const verifySignature = async (address: string, signature: string): Promise<boolean> => {
   try {
@@ -20,11 +17,11 @@ export const verifySignature = async (address: string, signature: string): Promi
 };
 
 export const generateAccessToken = (address: string): string => {
-  return jwt.sign({ address }, JWT_SECRET, { expiresIn: JWT_ACCESS_TOKEN_EXPIRY });
+  return jwt.sign({address}, JWT_SECRET, {expiresIn: JWT_ACCESS_TOKEN_EXPIRY});
 };
 
 export const generateRefreshToken = (address: string): string => {
-  return jwt.sign({ address }, JWT_SECRET, { expiresIn: JWT_REFRESH_TOKEN_EXPIRY });
+  return jwt.sign({address}, JWT_SECRET, {expiresIn: JWT_REFRESH_TOKEN_EXPIRY});
 };
 
 export const verifyAccessToken = (token: string): { address: string } | null => {
@@ -43,4 +40,4 @@ export const verifyRefreshToken = (token: string): { address: string } | null =>
   } catch (error) {
     return null;
   }
-}; 
+};

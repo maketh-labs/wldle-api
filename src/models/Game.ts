@@ -1,4 +1,4 @@
-import { Entity, PrimaryColumn, Column, CreateDateColumn, UpdateDateColumn } from "typeorm";
+import {Column, CreateDateColumn, Entity, PrimaryColumn, UpdateDateColumn} from "typeorm";
 
 @Entity()
 export class Game {
@@ -8,7 +8,7 @@ export class Game {
   @Column()
   player1: string;
 
-  @Column({ nullable: true })
+  @Column({nullable: true})
   player2: string | null;
 
   @Column()
@@ -17,46 +17,46 @@ export class Game {
   @Column()
   token: string;
 
-  @Column("decimal", { precision: 36, scale: 18 })
+  @Column("decimal", {precision: 36, scale: 18})
   amount: string;
 
-  @Column("decimal", { precision: 36, scale: 18 })
+  @Column("decimal", {precision: 36, scale: 18})
   fee: string;
 
-  @Column({ default: false })
+  @Column({default: false})
   settled: boolean;
 
-  @Column({ nullable: true })
+  @Column({nullable: true})
   answer: string | null;
 
-  @Column({ default: false })
+  @Column({default: false})
   player1Completed: boolean;
 
-  @Column({ default: false })
+  @Column({default: false})
   player2Completed: boolean;
 
-  @Column({ nullable: true })
+  @Column({nullable: true})
   player1Tries: number | null;
 
-  @Column({ nullable: true })
+  @Column({nullable: true})
   player2Tries: number | null;
 
-  @Column({ nullable: true })
+  @Column({nullable: true})
   player1Green: number | null;
 
-  @Column({ nullable: true })
+  @Column({nullable: true})
   player2Green: number | null;
 
-  @Column({ nullable: true })
+  @Column({nullable: true})
   player1Blue: number | null;
 
-  @Column({ nullable: true })
+  @Column({nullable: true})
   player2Blue: number | null;
 
-  @Column({ nullable: true })
+  @Column({nullable: true})
   winner: string | null;
 
-  @Column({ nullable: true })
+  @Column({nullable: true})
   signature: string | null;
 
   @CreateDateColumn()

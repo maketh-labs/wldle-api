@@ -1,5 +1,5 @@
-import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, ManyToOne, JoinColumn } from "typeorm";
-import { Game } from "./Game";
+import {Column, CreateDateColumn, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn} from "typeorm";
+import {Game} from "./Game";
 
 @Entity()
 export class GameGuess {
@@ -10,7 +10,7 @@ export class GameGuess {
   gameId: string;
 
   @ManyToOne(() => Game)
-  @JoinColumn({ name: "gameId" })
+  @JoinColumn({name: "gameId"})
   game: Game;
 
   @Column()

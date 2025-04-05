@@ -1,12 +1,12 @@
-import { AppDataSource } from "../utils/database";
-import { Game } from "../models";
-import { checksumAddress } from "viem";
+import {AppDataSource} from "../utils/database";
+import {Game} from "../models";
+import {checksumAddress} from "viem";
 
 export class GameRepository {
   private repository = AppDataSource.getRepository(Game);
 
   async findByGameId(gameId: string): Promise<Game | null> {
-    return this.repository.findOneBy({ gameId });
+    return this.repository.findOneBy({gameId});
   }
 
   async create(gameData: Partial<Game>): Promise<Game> {
@@ -19,7 +19,7 @@ export class GameRepository {
   }
 
   async update(gameId: string, gameData: Partial<Game>): Promise<void> {
-    await this.repository.update({ gameId }, {
+    await this.repository.update({gameId}, {
       ...gameData,
       player1: gameData.player1 ? checksumAddress(gameData.player1 as `0x${string}`) : undefined,
       player2: gameData.player2 ? checksumAddress(gameData.player2 as `0x${string}`) : undefined
@@ -36,15 +36,15 @@ export class GameRepository {
       }
       return game;
     }
-    
-    return this.create({ gameId, ...gameData });
+
+    return this.create({gameId, ...gameData});
   }
 
   async updatePlayerCompletion(
-    gameId: string, 
-    isPlayer1: boolean, 
-    tries: number, 
-    green: number, 
+    gameId: string,
+    isPlayer1: boolean,
+    tries: number,
+    green: number,
     blue: number
   ): Promise<void> {
     if (isPlayer1) {
@@ -65,6 +65,6 @@ export class GameRepository {
   }
 
   async updateWinner(gameId: string, winner: string, signature: string): Promise<void> {
-    await this.update(gameId, { winner, signature });
+    await this.update(gameId, {winner, signature});
   }
-} 
+}

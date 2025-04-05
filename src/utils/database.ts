@@ -1,5 +1,5 @@
 import {DataSource} from "typeorm";
-import {Game, GameGuess, User} from "../models";
+import {Game, GameGuess, User, DailyGameStat} from "../models";
 import {DB_DATABASE, DB_HOST, DB_PASSWORD, DB_PORT, DB_USERNAME, NODE_ENV} from "src/constants";
 
 export const AppDataSource = new DataSource({
@@ -9,7 +9,7 @@ export const AppDataSource = new DataSource({
   username: DB_USERNAME || "root",
   password: DB_PASSWORD || "password",
   database: DB_DATABASE || "wldle",
-  entities: [User, Game, GameGuess],
+  entities: [User, Game, GameGuess, DailyGameStat],
   synchronize: false,
   logging: NODE_ENV !== "production",
 });

@@ -17,10 +17,10 @@ export class Game {
   @Column()
   token: string;
 
-  @Column("decimal", {precision: 36, scale: 18})
+  @Column("bigint", {unsigned: true})
   amount: string;
 
-  @Column("decimal", {precision: 36, scale: 18})
+  @Column("bigint", {unsigned: true})
   fee: string;
 
   @Column({default: false})

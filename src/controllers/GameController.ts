@@ -34,15 +34,14 @@ export class GameController {
 
   async getPlayerProgress(req: Request, res: Response) {
     try {
-      const {gameId} = req.params;
-      const address = req.user?.address;
+      const {gameId, address} = req.params;
 
       if (!gameId) {
         return res.status(400).json({error: "Game ID is required"});
       }
 
       if (!address) {
-        return res.status(401).json({error: "User not authenticated"});
+        return res.status(401).json({error: "Address is required"});
       }
 
       const progress = await gameService.getPlayerProgress(gameId, address);

@@ -1,9 +1,14 @@
 import {AppDataSource} from "../utils/database";
 import {Game} from "../models";
 import {checksumAddress} from "viem";
+import {In} from "typeorm";
 
 export class GameRepository {
   private repository = AppDataSource.getRepository(Game);
+
+  async findByGameIdList(gameIds: string[]): Promise<Game[]> {
+    return this.repository.find({where: {gameId: In(gameIds)}});
+  }
 
   async findByGameId(gameId: string): Promise<Game | null> {
     return this.repository.findOneBy({gameId});

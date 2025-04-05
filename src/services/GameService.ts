@@ -19,6 +19,10 @@ export class GameService {
     }
   }
 
+  async getGamesByIdList(gameIds: string[]): Promise<Game[]> {
+    return gameRepository.findByGameIdList(gameIds);
+  }
+
   async validateGameForPlay(gameId: string, playerAddress: string): Promise<Game> {
     const game = await this.getGameById(gameId);
 

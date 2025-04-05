@@ -37,6 +37,7 @@ app.post("/auth/login", authController.login);
 app.post("/auth/refresh", authController.refreshToken);
 app.post("/auth/logout", authenticateToken, authController.logout);
 
+app.post("/games/filter", gameController.getGames);
 app.get("/games/:gameId", gameController.getGame);
 app.get("/games/:gameId/progress/:address", gameController.getPlayerProgress);
 app.post("/games/:gameId/guess", authenticateToken, gameController.makeGuess);

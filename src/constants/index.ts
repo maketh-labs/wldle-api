@@ -51,7 +51,7 @@ export const RPC_URLS = {
   main: process.env.MAIN_RPC_URL,
 };
 
-export const JWT_ACCESS_TOKEN_EXPIRY = '1h';
+export const JWT_ACCESS_TOKEN_EXPIRY = '1d';
 export const JWT_REFRESH_TOKEN_EXPIRY = '14d';
 export const SIGN_MESSAGE = 'Sign in to wldle'; // not used for now
 export const MAX_TRIES = 6;
